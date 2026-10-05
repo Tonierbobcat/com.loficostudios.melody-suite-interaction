@@ -1,4 +1,5 @@
 using System;
+using MelodySuite.Core.Runtime;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,26 +7,39 @@ namespace MelodySuite.Interaction.Runtime
 {
     public class Interactable : MonoBehaviour
     {
-        public Collider Collider { get; private set;}
+        [SerializeField] 
+        private Collider collider = null;
+
+        public Collider Collider => collider;
+        
         [SerializeField] private PostInteractionAction m_PostInteractionAction;
-        [SerializeField] private UnityEvent<Transform> m_onInteract = new();
+        [SerializeField] private UEvent<Transform> m_onInteract = new();
 
         [SerializeField] private InteractionSettings m_Settings = new();
         
-        public UnityEvent<Transform> onInteract => m_onInteract;
+        public UEvent<Transform> onInteract => m_onInteract;
         
         public InteractionSettings InteractionSettings => m_Settings;
 
         protected virtual void Awake()
         {
-            if (!TryGetComponent<Collider>(out var col))
+            if (collider == null)
+            {
+                if (!TryGetComponent<Collider>(out var col))
+                {
+                    Debug.LogError($"No Interaction Collider", gameObject);
+                    enabled = false;
+                    return;
+                }
+            
+                collider = col;
+            }
+
+            if (collider == null)
             {
                 Debug.LogError($"No Interaction Collider", gameObject);
                 enabled = false;
-                return;
             }
-            
-            Collider = col;
         }
 
         public void Interact(Transform tf)
@@ -66,7 +80,7 @@ namespace MelodySuite.Interaction.Runtime
         public float timeToHold;
         public string text = "Interact";
         [Min(0.1f)]
-        public float minInteractionDistance = 1f;
+        public float minInteractionDistance = 5f;
     }
 
     public enum InteractionType

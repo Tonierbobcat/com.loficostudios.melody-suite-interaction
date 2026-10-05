@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
+using MelodySuite.Core.Runtime;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace MelodySuite.Interaction.Runtime
 {
-    public class PlayerInteraction : MonoBehaviour
+    public class PlayerInteraction : PlayerBehaviour
     {
         [SerializeField]
         private AbstractInteractionDetection m_detection;
@@ -39,7 +40,7 @@ namespace MelodySuite.Interaction.Runtime
 
             var interactable = m_detection.Best();
             
-            if (!interactable || !interactable.isActiveAndEnabled)
+            if (!inputEnabled || !interactable || !interactable.isActiveAndEnabled)
             {
                 ClearSelection();
                 return;
@@ -82,6 +83,8 @@ namespace MelodySuite.Interaction.Runtime
 
         private Interactable _holdInteractable;
         
+   
+        
         public void Interact(InputAction.CallbackContext context)
         {
             if (context.canceled)
@@ -102,6 +105,9 @@ namespace MelodySuite.Interaction.Runtime
                 HoldProgress = 0f;
                 return;
             }
+
+            if (!inputEnabled)
+                return;
             
             if (!Selected || !context.performed)
                 return;

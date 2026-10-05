@@ -52,7 +52,7 @@ namespace MelodySuite.Interaction.Runtime
             if (best != null)
             {
                 var start = m_eyeHeight.position;
-                var target = best.GetComponent<Collider>().bounds.center;
+                var target = best.Collider.bounds.center;
 
                 Gizmos.color = Color.blue;
                 Gizmos.DrawLine(start, target);

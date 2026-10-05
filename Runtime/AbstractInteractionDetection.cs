@@ -26,19 +26,34 @@ namespace MelodySuite.Interaction.Runtime
             // clean up
             Detected.RemoveAll(item => item == null);
             
-            if ((layerMask.value & (1 << other.gameObject.layer)) != 0 &&
-                other.TryGetComponent<Interactable>(out var interactable))
+            if ((layerMask.value & (1 << other.gameObject.layer)) != 0)
             {
-                Detected.Add(interactable); 
+                if (TryGetInteractable(other, out var interactable))
+                {
+                    Detected.Add(interactable);
+                }
             }
+        }
+
+        protected bool TryGetInteractable(Collider other, out Interactable interactable)
+        {
+            if (other.TryGetComponent<Interactable>(out interactable))
+            {
+     
+                return true;
+            }
+                
+            return interactable = other.GetComponentInParent<Interactable>();
         }
 
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.CompareTag("Player"))
                 return;
-            if (other.TryGetComponent<Interactable>(out var interactable))
+            if (TryGetInteractable(other, out var interactable))
+            {
                 Detected.Remove(interactable);
+            }
         }
 
         public abstract Interactable Best();

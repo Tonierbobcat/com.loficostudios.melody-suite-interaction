@@ -15,7 +15,8 @@ namespace MelodySuite.Interaction.Runtime
             {
                 if (hitInfo.collider)
                 { 
-                    if (hitInfo.collider.GetComponent<Collider>().TryGetComponent<Interactable>(out var obj))
+                    
+                    if (TryGetInteractable(hitInfo.collider.GetComponent<Collider>(), out var obj))
                     {
                         if ((obj.transform.position - transform.position).sqrMagnitude <=
                             obj.InteractionSettings.minInteractionDistance *
@@ -44,7 +45,7 @@ namespace MelodySuite.Interaction.Runtime
             if (best != null)
             {
                 var start = m_camera.transform.position;
-                var target = best.GetComponent<Collider>().bounds.center;
+                var target = best.Collider.bounds.center;
 
                 Gizmos.color = Color.blue;
                 Gizmos.DrawLine(start, target);
