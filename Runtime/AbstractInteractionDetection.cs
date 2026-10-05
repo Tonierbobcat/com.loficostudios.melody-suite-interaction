@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-namespace InteractionSystem.Runtime
+namespace MelodySuite.Interaction.Runtime
 {
     public interface IInteractionDetection
     {

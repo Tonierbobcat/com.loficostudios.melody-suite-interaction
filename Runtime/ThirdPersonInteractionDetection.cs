@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace InteractionSystem.Runtime
+namespace MelodySuite.Interaction.Runtime
 {
     public class ThirdPersonInteractionDetection : AbstractInteractionDetection
     {

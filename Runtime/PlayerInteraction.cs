@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-namespace InteractionSystem.Runtime
+namespace MelodySuite.Interaction.Runtime
 {
     public class PlayerInteraction : MonoBehaviour
     {

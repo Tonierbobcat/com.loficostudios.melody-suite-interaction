@@ -2,9 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace InteractionSystem.Runtime
+namespace MelodySuite.Interaction.Runtime
 {
-
     public class Interactable : MonoBehaviour
     {
         public Collider Collider { get; private set;}
